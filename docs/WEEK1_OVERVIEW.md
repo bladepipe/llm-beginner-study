@@ -1,1 +1,10 @@
-IyDigoAgV0VFSyAxOiBCaWdyYW0gRm91bmRhdGlvbnMKPiDigKAgaXMgYWxsIGxhbmd1YWdlIG1vZGVscyB0aGUgc3RhcnRpbmcgcG9pbnQ6IGZyb20gc3RhdGlzdGljYWwgY29tb2NjdXJyZW5jZSAoYmlncmFtX3NjcmF0Y2gucHkpIG91dCB0byB0aGUgR1BUIHNlbGYtYXR0ZW50aW9uLgoKLS0tCgp8IEVuZ2xpc2ggfCBDaGluZXNlIHwKfC0tLS0tLS0tLS0tfC0tLS0tLS0tLS0tfAp8IFByZWRpY3RzIG5leHQgY2hhciAqb25seSogZnJvbSBwcmV2aW91cyBvbmU6IGAoJ2UnfCdoJylgIHwgfCBvbmx5IGJ5IHByZXZpb3VzIGNoYXJhY3RlciBwcmVkaWN0cyBuZXh0IG9uZSwgc3VjaCBhcyBgKCdlJ3wnaCcpYCB8Cnwgbm8gZ3JhZGllbnRzLiBKdXN0IGNvdW50ICYgZGl2aWRlLiB8IHwgTm8gZ3JhZGllbnRzLiBKdXN0IGNvdW50ICYgZGl2aWRlLiB8Cnwgc3RhcnQg4oCTIGxvb2t1cCAg4oCTIHNhbXBsZSDigJMgcmVwZWF0LiB8IHwg4oCTIOW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+peW+......
+# WEEK 1: Bigram Foundations
+> 💡 这是所有语言模型的起点：从统计共现（`bigram_scratch.py`）出发，走向 GPT 的自注意力。
+
+---
+
+| English | 中文 |
+|---------|------|
+| Predicts next char *only* from previous one: `(e|h)` | 仅由前一个字符预测下一个：`(e|h)` |
+| no gradients. Just count & divide. | 无梯度。仅计数与除法。 |
+| start — lookup — sample — repeat. | 开始 — 查表 — 采样 — 重复。 |
