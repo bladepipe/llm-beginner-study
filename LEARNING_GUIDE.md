@@ -1,36 +1,52 @@
-# LEARNING_GUIDE.md — Bigram 模型逐行教学（中英双语 · 带行号）
+# 📘 学习指南（Learning Guide）
 
-## 🔑 新手最应掌握的三个核心问题
+本指南按周组织，每章包含：
+- ✅ **核心目标**（What）
+- ✅ **为什么学**（Why）
+- ✅ **立即实践**（How）
 
-### 1. 什么是 Bigram 模型？
-A Bigram model is a language model that predicts the next character based *only* on the previous one. Formally, it models: `P('e' | 'h')`
-For example, if after the letter `'h'` the letter `'e'` appears 60% of the time in training text, the model captures exactly that probability.
+---
 
-Bigram 模型是一种语言模型，它仅根据前一个字符预测下一个字符。形式上，它建模的是：
-  `P('e' | 'h')`（即“在 `'h'` 之后出现 `'e'` 的概率”）
-例如，若在训练文本中，字母 `'h'` 后面出现 `'e'` 的频率为 60%，该模型就精确捕获这一概率。
+## WEEK 1: Bigram 基础
 
-### 2. 它如何“学习”？
-It doesn’t use gradients or neural networks. It simply:
-- Scans the training text (e.g., Shakespeare)
-- Counts how often each pair (`'h'→'e'`, `'e'→'l'`, etc.) appears
-- Converts those counts into probabilities (e.g., `'h'→'e'`: 12 times out of 20 total `'h'` appearances = 0.6)
+### ✅ What
+构建字符级统计语言模型：给定前一个字符，预测下一个字符的概率。
 
-它不使用梯度或神经网络。它只做三件事：
-- 扫描训练文本（如莎士比亚戏剧）
-- 统计每一对字符（如 `'h'→'e'`、`'e'→'l'` 等）出现的次数
-- 将这些计数转化为概率（例如：`'h'` 共出现 20 次，其中 12 次后面是 `'e'` → `P('e'|'h') = 12/20 = 0.6`）
+### ✅ Why
+- 是所有 LLM 的起点，理解 `P(next|prev)` 是建模本质；
+- 无需神经网络，纯 Python 即可实现，适合零基础入门。
 
-### 3. 它如何生成文本？
-Given a starting character (e.g., `'t'`), it:
-- Looks up the probability table for `'t'` → e.g., `'h':0.62`, `'e':0.12`, `' ':0.09`
-- Randomly picks the next character *weighted by those probabilities*
-- Repeats: now `'h'` becomes the context, looks up its row, samples again…
+### ✅ How
+```python
+# bigram_scratch.py
+stoi = {ch: i for i, ch in enumerate(chars)}
+itos = {i: ch for i, ch in enumerate(chars)}
+# ... 统计共现频次 → 构建 P('e'|'h')
+```
 
-给定一个起始字符（如 `'t'`），它会：
-- 查询 `'t'` 对应的概率表 → 例如 `'h':0.62`、`'e':0.12`、`' ':0.09`
-- 按这些概率加权随机选取下一个字符
-- 重复该过程：此时 `'h'` 成为新上下文，查询其对应行，再次采样……
+---
 
-→ This is **autoregressive generation**, the core idea behind GPT.
-→ 这就是**自回归生成**，也是 GPT 的核心思想。
+## WEEK 2: 分词与嵌入（Tokenization & Embedding）
+
+### ✅ What
+将字符序列转换为整数序列（tokenization），再映射为稠密向量（embedding），为后续 self-attention 提供输入。
+
+### ✅ Why
+- Bigram 只能建模局部共现，无法捕捉语义；
+- 向量表示使模型能学习 `"king" - "man" + "woman" ≈ "queen"` 这类关系；
+- 是从统计模型迈向神经网络模型的唯一桥梁。
+
+### ✅ How
+```python
+# projects/minGPT-light/tokenizer.py
+from tokenizer import Tokenizer
+t = Tokenizer()
+ids = t.encode("hello world")  # → [36, 37, 38, 38, 39, 1, 56, 40, 41, 42, 43]
+
+# projects/minGPT-light/embedding.py
+from embedding import Embedding
+e = Embedding(vocab_size=65, n_embd=32)
+vecs = e(torch.tensor(ids))     # → (11, 32) 向量矩阵
+```
+
+> 💡 提示：`vocab_size=65` 来自 `tokenizer.chars` 长度，`n_embd=32` 是可调超参，值越小越轻量。
