@@ -59,3 +59,9 @@ if __name__ == '__main__':
     
     # Generate
     print("\nGenerated:", generate_text(m, start='h', length=20))
+
+# ✅ 验证示例：展示前 3 个最高概率预测
+for ch in ['h', 't', 'a']:
+    probs = m.get(ch, {})
+    top3 = sorted(probs.items(), key=lambda x: x[1], reverse=True)[:3]
+    print(f"P(*|'{ch}') top3: {top3}")

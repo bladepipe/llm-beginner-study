@@ -28,6 +28,8 @@ itos = {i: ch for i, ch in enumerate(chars)}
 
 ## WEEK 2: 分词与嵌入（Tokenization & Embedding）
 
+> ⚠️ 思考题：用 `bigram_scratch.py` 生成 ‘The quick brown fox jumps...’ —— 当生成到 ‘jumps’ 时，模型只看到 ‘s’，却要预测下一个词。它无法知道前面有 ‘fox’，更不知道 ‘quick’ 和 ‘brown’ 的修饰关系。这就是 Bigram 的‘短视’。而 `model.py` 中的 self-attention，正是为解决这个‘长程依赖’问题而生。
+
 ### ✅ What
 将字符序列转换为整数序列（tokenization），再映射为稠密向量（embedding），为后续 self-attention 提供输入。
 
